@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-ITERATIONS=1
+ITERATIONS=25
 
 # kcat -C -F ~/local.conf -t test-topic -e -u -o beginning
 

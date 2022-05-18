@@ -51,9 +51,10 @@ fun process(consumer: KafkaConsumer<String, ByteArray>) {
         records.forEach { record ->
             try {
                 val message = Serde.decode<Message>(record.value())
-                val work = getWorkAsync(message, true)
+                val useDelay = message.id % 2 == 0
+                val work = getWorkAsync(message, useDelay)
 
-                launch {
+                GlobalScope.launch {
                     work.await()
                     val delta = getTimeMillis() - message.start!!
                     log.info("Completed work for message with ID ${message.id}, in ${delta}ms")
